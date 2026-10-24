@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Syraxen"
+description = "Syraxen yazılım ajansı için Türkçe tanıtım sitesi. Ajansın hizmetlerini, örnek projelerini, çalışma sürecini ve iletişim bilgilerini potansiyel müşterilere sunar."
+version = "1.0.0"
+id = "artifacts/syraxen"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 24660
+
+[services.development]
+run = "pnpm --filter @workspace/syraxen run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/syraxen", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/syraxen/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "24660"
+BASE_PATH = "/"
